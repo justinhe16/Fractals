@@ -3,7 +3,7 @@
 //
 // Represents a complex number with a real number section and a imaginary number section.
 //************************************************************************************************
-public class ComplexNumber {
+public class ComplexNumber implements Comparable {
 	private double real, imaginary;
 
 	/** 
@@ -48,11 +48,31 @@ public class ComplexNumber {
 	 *  printing representation of the ComplexNumber class in the format a + bi.
 	 */
 	public String toString() {
-		if (imaginary > 0){
-			return real + " + " + imaginary + "i";
+		if (imaginary != 0 && real != 0){
+			if (imaginary > 0){
+				return real + " + " + imaginary + "i";
+			}
+			else
+				return real + " - " + -1*imaginary + "i";
+		}
+		else if (imaginary == 0){
+			return real + "";
+		}
+		else {
+			return imaginary + "i";
+		}
+	}
+
+	/** UTILITY: equals(Object o)
+	 * 
+	 * 
+	 */
+	public boolean equals(Object o){
+		if (real == ((ComplexNumber) o).getReal() && imaginary == ((ComplexNumber) o).getImaginary()){
+			return true;
 		}
 		else
-			return real + " - " + -1*imaginary + "i";
+			return false;
 	}
 
 	/** ACCESS METHOD: getReal()
@@ -68,6 +88,34 @@ public class ComplexNumber {
 	 * @return imaginary the imaginary variable of the respective ComplexNumber being called
 	 */
 	public double getImaginary() { return imaginary; }
+
+	/** CORE OPERATION: magnitude
+	 * 
+	 * 
+	 */
+	public double magnitude(){
+		double aandbsquared = (real*real)+(imaginary*imaginary);
+		if (aandbsquared < 0){
+			aandbsquared = -1*aandbsquared;
+		}
+		double magn = Math.sqrt(aandbsquared);
+		return magn;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param o
+	 * @return
+	 */
+	public int compareTo(Object o) {
+        if (this.magnitude() == ((ComplexNumber) o).magnitude())
+            return 0;
+        else if ((this.magnitude()) > ((ComplexNumber) o).magnitude())
+            return 1;
+        else
+            return -1;
+    }
 
 	/** CORE OPERATION: getReciprocal()
 	 * This is a Core Operation method. When called, it creates the reciprocal of the ComplexNumber
@@ -136,9 +184,36 @@ public class ComplexNumber {
 	 * This is a core operation method where 'this' ComplexNumber is divided with ComplexNumber c.
 	 * @param c the ComplexNumber to be divided with 'this' ComplexNumber.
 	 * @return dividedComplexNumber the quotient of 'this' ComplexNumber and ComplexNumber c.
+	 * 
+	 * FLAG: divide by 0?
 	 */
 	public ComplexNumber divide (ComplexNumber c){
-		ComplexNumber dividedComplexNumber = this.multiply(c.getConjugate());
+		ComplexNumber Numerator = new ComplexNumber(this.multiply(c.getConjugate()));
+		ComplexNumber Denominator = new ComplexNumber(c.multiply(c.getConjugate()));
+		double finalreal = (Numerator.getReal()/Denominator.getReal());
+		double finalimaginary = (Numerator.getImaginary()/Denominator.getReal());
+		ComplexNumber dividedComplexNumber = new ComplexNumber(finalreal,finalimaginary);
 		return dividedComplexNumber; 
+	}
+
+	/** CORE OPERATION: power(int a)
+	 * FLAG: necessary for a > 0
+	 * 
+	 */
+	public ComplexNumber power(int a){
+		ComplexNumber poweredComplexNumber = this;
+		for (int i = 0; i < a; i++){
+			poweredComplexNumber = this.multiply(this);
+		}
+		return poweredComplexNumber;
+	}
+
+	/** CORE OPERATION: square()
+	 * 
+	 * 
+	 */
+	public ComplexNumber square(){
+		ComplexNumber squareComplexNumber = this.multiply(this);
+		return squareComplexNumber;
 	}
 }
