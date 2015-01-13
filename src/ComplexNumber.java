@@ -3,8 +3,8 @@
 //
 // Represents a complex number with a real number section and a imaginary number section.
 //************************************************************************************************
-public class ComplexNumber implements Comparable {
-	private double real, imaginary;
+public class ComplexNumber implements Comparable<Object>{
+	private double a, b;
 
 	/** 
 	 *  @author Justin He
@@ -19,8 +19,8 @@ public class ComplexNumber implements Comparable {
 	 * @param imagparam the imaginary number that the user wants his/her ComplexNumber to have
 	 */
 	public ComplexNumber (double realparam, double imagparam){
-		real = realparam;
-		imaginary = imagparam;
+		a = realparam;
+		b = imagparam;
 	}
 
 	/** CONSTRUCTOR: ComplexNumber (ComplexNumber c1)
@@ -30,8 +30,8 @@ public class ComplexNumber implements Comparable {
 	 * aspects to be copied into a new Complex Number. 
 	 */
 	public ComplexNumber (ComplexNumber c1){
-		real = c1.real;
-		imaginary = c1.imaginary;
+		a = c1.a;
+		b = c1.b;
 	}
 
 	/** CONSTRUCTOR: ComplexNumber ()
@@ -39,8 +39,8 @@ public class ComplexNumber implements Comparable {
 	 * with its real variable as 1 and its imaginary variable as 1.
 	 */
 	public ComplexNumber (){
-		real = 1;
-		imaginary = 1;
+		a = 1;
+		b = 1;
 	}
 
 	/** UTILITY: toString()
@@ -48,18 +48,18 @@ public class ComplexNumber implements Comparable {
 	 *  printing representation of the ComplexNumber class in the format a + bi.
 	 */
 	public String toString() {
-		if (imaginary != 0 && real != 0){
-			if (imaginary > 0){
-				return real + " + " + imaginary + "i";
+		if (b != 0 && a != 0){
+			if (b > 0){
+				return a + " + " + b + "i";
 			}
 			else
-				return real + " - " + -1*imaginary + "i";
+				return a + " - " + -1*b + "i";
 		}
-		else if (imaginary == 0){
-			return real + "";
+		else if (b == 0){
+			return a + "";
 		}
 		else {
-			return imaginary + "i";
+			return b + "i";
 		}
 	}
 
@@ -68,7 +68,7 @@ public class ComplexNumber implements Comparable {
 	 * 
 	 */
 	public boolean equals(Object o){
-		if (real == ((ComplexNumber) o).getReal() && imaginary == ((ComplexNumber) o).getImaginary()){
+		if (a == ((ComplexNumber) o).getReal() && b == ((ComplexNumber) o).getImaginary()){
 			return true;
 		}
 		else
@@ -80,28 +80,28 @@ public class ComplexNumber implements Comparable {
 	 *  ComplexNumber.
 	 * @return real the real variable of the respective ComplexNumber being called
 	 */
-	public double getReal() { return real; }
+	public double getReal() { return a; }
 
 	/** ACCESS METHOD: getImaginary()
 	 *  This is an access method. When called, it returns the imaginary variable of the respect-
 	 *  ive ComplexNumber.
 	 * @return imaginary the imaginary variable of the respective ComplexNumber being called
 	 */
-	public double getImaginary() { return imaginary; }
+	public double getImaginary() { return b; }
 
 	/** CORE OPERATION: magnitude
 	 * 
 	 * 
 	 */
 	public double magnitude(){
-		double aandbsquared = (real*real)+(imaginary*imaginary);
+		double aandbsquared = (a*a)+(b*b);
 		if (aandbsquared < 0){
 			aandbsquared = -1*aandbsquared;
 		}
 		double magn = Math.sqrt(aandbsquared);
 		return magn;
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -109,23 +109,12 @@ public class ComplexNumber implements Comparable {
 	 * @return
 	 */
 	public int compareTo(Object o) {
-        if (this.magnitude() == ((ComplexNumber) o).magnitude())
-            return 0;
-        else if ((this.magnitude()) > ((ComplexNumber) o).magnitude())
-            return 1;
-        else
-            return -1;
-    }
-
-	/** CORE OPERATION: getReciprocal()
-	 * This is a Core Operation method. When called, it creates the reciprocal of the ComplexNumber
-	 * by returning a new ComplexNumber that is "scaled".
-	 * @return reciprocal of the reciprocal of the ComplexNumber called with this method.
-	 */
-	public ComplexNumber getReciprocal(){
-		double scale = real*real + imaginary*imaginary;
-		ComplexNumber reciprocal = new ComplexNumber(real/scale,imaginary/scale);
-		return reciprocal;
+		if (this.magnitude() == ((ComplexNumber) o).magnitude())
+			return 0;
+		else if ((this.magnitude()) > ((ComplexNumber) o).magnitude())
+			return 1;
+		else
+			return -1;
 	}
 
 	/** CORE OPERATION: getConjugate()
@@ -135,7 +124,7 @@ public class ComplexNumber implements Comparable {
 	 * by -1.
 	 */
 	public ComplexNumber getConjugate(){
-		ComplexNumber conjugate = new ComplexNumber(this.real, -1*this.imaginary);
+		ComplexNumber conjugate = new ComplexNumber(this.a, -1*this.b);
 		return conjugate;
 	}
 
@@ -146,8 +135,8 @@ public class ComplexNumber implements Comparable {
 	 * @return addedComplexNumber a ComplexNumber that is the sum of 'this' ComplexNumber and c ComplexNumber.
 	 */
 	public ComplexNumber add (ComplexNumber c){
-		double RealCombo = real + c.getReal();
-		double ImaginaryCombo = imaginary + c.getImaginary();
+		double RealCombo = a + c.getReal();
+		double ImaginaryCombo = b + c.getImaginary();
 		ComplexNumber addedComplexNumber = new ComplexNumber (RealCombo, ImaginaryCombo);
 		return addedComplexNumber;
 	}
@@ -158,8 +147,8 @@ public class ComplexNumber implements Comparable {
 	 * @return subtractedComplexNumber a ComplexNumber that is the difference of 'this' ComplexNumber and c ComplexNumber.
 	 */
 	public ComplexNumber subtract (ComplexNumber c){
-		double RealCombo = real - c.getReal();
-		double ImaginaryCombo = imaginary - c.getImaginary();
+		double RealCombo = a - c.getReal();
+		double ImaginaryCombo = b - c.getImaginary();
 		ComplexNumber subtractedComplexNumber = new ComplexNumber (RealCombo, ImaginaryCombo);
 		return subtractedComplexNumber;
 	}
@@ -170,11 +159,11 @@ public class ComplexNumber implements Comparable {
 	 * @return multipledComplexNumber the product of 'this' ComplexNumber and ComplexNumber c.
 	 */
 	public ComplexNumber multiply (ComplexNumber c){
-		double F = real * c.getReal();
-		double O = real * c.getImaginary();
-		double I = imaginary * c.getReal();
+		double F = a * c.getReal();
+		double O = a * c.getImaginary();
+		double I = b * c.getReal();
 		double imaginaryOI = O + I; 
-		double L = imaginary * c.getImaginary() * -1;
+		double L = b * c.getImaginary() * -1;
 		double realFL = F + L;
 		ComplexNumber multipliedComplexNumber = new ComplexNumber(realFL, imaginaryOI);
 		return multipliedComplexNumber;
@@ -188,12 +177,17 @@ public class ComplexNumber implements Comparable {
 	 * FLAG: divide by 0?
 	 */
 	public ComplexNumber divide (ComplexNumber c){
-		ComplexNumber Numerator = new ComplexNumber(this.multiply(c.getConjugate()));
-		ComplexNumber Denominator = new ComplexNumber(c.multiply(c.getConjugate()));
-		double finalreal = (Numerator.getReal()/Denominator.getReal());
-		double finalimaginary = (Numerator.getImaginary()/Denominator.getReal());
-		ComplexNumber dividedComplexNumber = new ComplexNumber(finalreal,finalimaginary);
-		return dividedComplexNumber; 
+		if (c.equals(new ComplexNumber(0,0))){
+			throw new ArithmeticException("Cannot divide by zero!");
+		}
+		else{
+			ComplexNumber Numerator = new ComplexNumber(this.multiply(c.getConjugate()));
+			ComplexNumber Denominator = new ComplexNumber(c.multiply(c.getConjugate()));
+			double finalreal = (Numerator.getReal()/Denominator.getReal());
+			double finalimaginary = (Numerator.getImaginary()/Denominator.getReal());
+			ComplexNumber dividedComplexNumber = new ComplexNumber(finalreal,finalimaginary);
+			return dividedComplexNumber; 
+		}
 	}
 
 	/** CORE OPERATION: power(int a)
@@ -201,6 +195,9 @@ public class ComplexNumber implements Comparable {
 	 * 
 	 */
 	public ComplexNumber power(int a){
+		if (a < 0){
+			throw new ArithmeticException("For this program, you cannot enter powers less than 0.");
+		}
 		ComplexNumber poweredComplexNumber = this;
 		for (int i = 0; i < a; i++){
 			poweredComplexNumber = this.multiply(this);
