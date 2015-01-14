@@ -9,8 +9,7 @@ public class ComplexNumber implements Comparable<Object>{
 	/** 
 	 *  @author Justin He
 	 *  @version Jan 1st, 2015
-	 */  
-
+	 */ 
 
 	/** CONSTRUCTOR: ComplexNumber (double realparam, double imagparam)
 	 * This constructor takes in two double variables, realparam and imagparam, that
@@ -30,8 +29,8 @@ public class ComplexNumber implements Comparable<Object>{
 	 * aspects to be copied into a new Complex Number. 
 	 */
 	public ComplexNumber (ComplexNumber c1){
-		a = c1.a;
-		b = c1.b;
+		a = c1.getReal();
+		b = c1.getImaginary();
 	}
 
 	/** CONSTRUCTOR: ComplexNumber ()
@@ -64,7 +63,8 @@ public class ComplexNumber implements Comparable<Object>{
 	}
 
 	/** UTILITY: equals(Object o)
-	 * 
+	 * Tests whether two objects (after being typecasted to ComplexNumbers) are the same by looking
+	 * at real and imaginary parts.
 	 * 
 	 */
 	public boolean equals(Object o){
@@ -89,9 +89,9 @@ public class ComplexNumber implements Comparable<Object>{
 	 */
 	public double getImaginary() { return b; }
 
-	/** CORE OPERATION: magnitude
-	 * 
-	 * 
+	/** CORE OPERATION: magnitude()
+	 * Calculates how far a ComplexNumber object point is on a Complexplane from the origin (0,0)
+	 * @return magn the distance between ComplexNumber and origin
 	 */
 	public double magnitude(){
 		double aandbsquared = (a*a)+(b*b);
@@ -102,11 +102,14 @@ public class ComplexNumber implements Comparable<Object>{
 		return magn;
 	}
 
-	/**
+	/** compareTo(Object o)
+	 * This is a compareTo method that is related to the Comparable Interface. This compareTo method
+	 * compares the magnitudes of two objects (after being typecasted to a ComplexNumber)
 	 * 
-	 * 
-	 * @param o
-	 * @return
+	 * @param o Object to be compared
+	 * @return 0 returned if magnitudes are the same
+	 * @return 1 returned if first object has larger magnitude than the second
+	 * @return -1 returned if the first object has smaller magnitude than the second
 	 */
 	public int compareTo(Object o) {
 		if (this.magnitude() == ((ComplexNumber) o).magnitude())
@@ -173,8 +176,6 @@ public class ComplexNumber implements Comparable<Object>{
 	 * This is a core operation method where 'this' ComplexNumber is divided with ComplexNumber c.
 	 * @param c the ComplexNumber to be divided with 'this' ComplexNumber.
 	 * @return dividedComplexNumber the quotient of 'this' ComplexNumber and ComplexNumber c.
-	 * 
-	 * FLAG: divide by 0?
 	 */
 	public ComplexNumber divide (ComplexNumber c){
 		if (c.equals(new ComplexNumber(0,0))){
@@ -191,26 +192,35 @@ public class ComplexNumber implements Comparable<Object>{
 	}
 
 	/** CORE OPERATION: power(int a)
-	 * FLAG: necessary for a > 0
-	 * 
+	 * This method takes a ComplexNumber and 'powers' it
+	 * @param a the number that is the power
+	 * @return ComplexNumber(1,0) returns a ComplexNumber that is equal to 1 when power inputted is 0.
+	 * @return poweredComplexNumber a ComplexNumber that has gone under operations to represent this complexnumber powered by a.
+	 * @throws ArithmeticException if a < 0 
 	 */
 	public ComplexNumber power(int a){
 		if (a < 0){
 			throw new ArithmeticException("For this program, you cannot enter powers less than 0.");
 		}
-		ComplexNumber poweredComplexNumber = this;
-		for (int i = 0; i < a; i++){
-			poweredComplexNumber = this.multiply(this);
+		if (a == 0){
+			return new ComplexNumber(1,0);
 		}
-		return poweredComplexNumber;
+		else{
+			ComplexNumber poweredComplexNumber = this;
+			for (int i = 1; i < a; i++){
+				poweredComplexNumber = this.multiply(this);
+			}
+			return poweredComplexNumber;
+		}
 	}
 
 	/** CORE OPERATION: square()
-	 * 
+	 *  This method squares the ComplexNumber (multiplies it by itself)
 	 * 
 	 */
 	public ComplexNumber square(){
 		ComplexNumber squareComplexNumber = this.multiply(this);
 		return squareComplexNumber;
 	}
+
 }
