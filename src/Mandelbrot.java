@@ -1,23 +1,13 @@
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class Mandelbrot {
 	static ComplexNumber first = new ComplexNumber(-1, -5);
 	static ComplexNumber second = new ComplexNumber(0, 0);
 
 	public static void main (String[] args){
-		try{
-			System.out.println(first.divide(second));
-		}
-		catch(ArithmeticException ex){
-			System.err.println(ex.getMessage());
-		}
-		
-		try{
-			System.out.println(first.power(-1));
-		}
-		catch(ArithmeticException ex1){
-			System.err.println(ex1.getMessage());
-		}
 		JFrame window = new JFrame("one");
 		window.setVisible(true);
 		window.setTitle("MandelBrot Set");
